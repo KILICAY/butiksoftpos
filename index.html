@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Butiksoft POS Print Server</title>
+    <style media="print">
+      #formContainer {
+        display: none;
+      }
+    </style>
+    <style>
+      body {
+        position: relative;
+        margin: 0;
+        padding: 0;
+      }
+
+      #formContainer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      const { ipcRenderer } = require("electron");
+      const Store = require("electron-store");
+      const store = new Store();
+
+      function save(e) {
+        const printerId = e.target.value;
+        store.set("printerId", printerId);
+      }
+
+      ipcRenderer.on("setContent", (event, content) => {
+        document.getElementById("custom-content").innerHTML = content;
+      });
+
+      function inputLoad() {
+        const printerIdInput = document.getElementById("printer-id");
+        const savedPrinterId = store.get("printerId");
+        printerIdInput.value = savedPrinterId;
+        ipcRenderer.send("updatePrinterId", savedPrinterId);
+      }
+
+      window.onload = inputLoad;
+
+      ipcRenderer.on("update-download-progress", (event, percent) => {
+        // Update UI with download progress
+        // For example: Update a progress bar
+        // You can add your own UI update logic here
+      });
+
+      ipcRenderer.on("update-downloaded", (event, info) => {
+        // Notify the user that an update is ready to be installed
+        // For example: Show a notification and offer an "Install Update" button
+        // You can add your own UI update logic here
+      });
+    </script>
+    <p id="custom-content"></p>
+    <div id="formContainer">
+      <label for="printer-id">Printer ID:</label>
+      <input type="text" id="printer-id" onkeyup="save(event)" />
+    </div>
+  </body>
+</html>

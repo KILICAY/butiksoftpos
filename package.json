@@ -1,0 +1,36 @@
+{
+  "name": "butiksoft-pos-print-server",
+  "version": "1.2.2",
+  "description": "Butiksoft POS Print Server",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-packager . ButiksoftPOS_PrintServer --platform=win32 --arch=x64 --out=dist --overwrite  --icon=pos.ico"
+  },
+  "author": "Nissa Yazılım",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^13.1.4",
+    "electron-is-dev": "^2.0.0",
+    "electron-store": "^8.1.0",
+    "electron-updater": "^6.1.1",
+    "isomorphic-fetch": "^3.0.0"
+  },
+  "devDependencies": {
+    "electron-packager": "^17.1.1"
+  },
+  "build": {
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "KILICAY",
+        "repo": "butiksoftpos"
+      }
+    ],
+    "appId": "com.example.butiksoftpos",
+    "protocols": {
+      "name": "butiksoftpos",
+      "schemes": ["butiksoftpos"]
+    }
+  }
+}
